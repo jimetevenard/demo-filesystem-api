@@ -2,12 +2,15 @@ body {
     font-family: sans-serif;
     box-sizing: content-box;
 }
-* {
-    margin: 10px;
+div, nav, h1 {
+    margin: 20px;
 }
 nav {
     padding: 10px;
     background-color: floralwhite;
+}
+nav p {
+    margin: 0.5em 0;
 }
 #metadata {
     font-family: monospace;

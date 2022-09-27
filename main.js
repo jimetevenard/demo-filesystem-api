@@ -9,6 +9,8 @@ const pickerOpts = {
     multiple: false
 };
 
+var outputStream;
+
 function getTheFile() {
     if(!window.showOpenFilePicker){
         handleError('Navigateur non pris en charge !');
@@ -16,8 +18,9 @@ function getTheFile() {
     }
     // open file picker
     window.showOpenFilePicker(pickerOpts).then(function ([fileHandle]) {
-
-        // get file contents
+        if(document.getElementById('checkbox-save').checked){
+            requestWritableStream(fileHandle);
+        }
         fileHandle.getFile().then(handleFileData, handleError);
 
     }, handleError);
@@ -34,9 +37,23 @@ function displayFileContents(contents){
     document.getElementById('editor').value = contents;
 }
 
+function requestWritableStream(fileHandle){
+    const saveButton = document.getElementById('btn-save');
+
+    outputStream = undefined;
+    saveButton.disabled = true;
+
+    fileHandle.createWritable().then(function(writableStream){
+        outputStream = writableStream;
+        saveButton.disabled = false;
+    });
+}
+
 function handleError(error) {
     alert(`ERREUR : ${error}`);
     console.error(error);
 }
+
+
 
 document.getElementById('btn-open').addEventListener('click', getTheFile);
