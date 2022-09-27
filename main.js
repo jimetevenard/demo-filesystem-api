@@ -1,10 +1,8 @@
 const pickerOpts = {
     types: [
         {
-            description: 'Images',
-            accept: {
-                'text/*': ['.txt', '.md', '.html', '.htm', '.xml', '.json']
-            }
+            description: 'Fichiers texte',
+            accept: { 'text/*': ['.txt', '.md', '.html', '.htm', '.xml', '.json'] }
         },
     ],
     excludeAcceptAllOption: true,
