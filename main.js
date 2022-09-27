@@ -10,6 +10,10 @@ const pickerOpts = {
 };
 
 function getTheFile() {
+    if(!window.showOpenFilePicker){
+        handleError('Navigateur non pris en charge !');
+        return;
+    }
     // open file picker
     window.showOpenFilePicker(pickerOpts).then(function ([fileHandle]) {
 
