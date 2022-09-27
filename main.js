@@ -1,23 +1,28 @@
-const pickerOpts = {
-    types: [
-        {
-            description: 'Fichiers texte',
-            accept: { 'text/*': ['.txt', '.md', '.html', '.htm', '.xml', '.json'] }
-        },
-    ],
-    excludeAcceptAllOption: true,
-    multiple: false
-};
+/**
+ * FileSystemWritableFileStream du fichier courant 
+ */
+var outputStreamGlobal;
 
-var outputStream;
 
-function getTheFile() {
+function openFilePicker() {
     if(!window.showOpenFilePicker){
         handleError('Navigateur non pris en charge !');
         return;
     }
+
+    const pickerOptions = {
+        types: [
+            {
+                description: 'Fichiers texte',
+                accept: { 'text/*': ['.txt', '.md', '.html', '.htm', '.xml', '.json'] }
+            },
+        ],
+        excludeAcceptAllOption: true,
+        multiple: false
+    };
+
     // open file picker
-    window.showOpenFilePicker(pickerOpts).then(function ([fileHandle]) {
+    window.showOpenFilePicker(pickerOptions).then(function ([fileHandle]) {
         if(document.getElementById('checkbox-save').checked){
             requestWritableStream(fileHandle);
         }
@@ -42,22 +47,22 @@ function displayFileContents(contents){
 function requestWritableStream(fileHandle){
     const saveButton = document.getElementById('btn-save');
 
-    outputStream = undefined;
+    outputStreamGlobal = undefined;
     saveButton.disabled = true;
 
     fileHandle.createWritable().then(function(writableStream){
-        outputStream = writableStream;
+        outputStreamGlobal = writableStream;
         saveButton.disabled = false;
     });
 }
 
 function saveFile(){
-    if(!outputStream) throw new Error('pas d\'accès en écriture');
+    if(!outputStreamGlobal) throw new Error('pas d\'accès en écriture');
 
     const editorContents = document.getElementById('editor').value;
-    outputStream.write(editorContents).then(() => {
+    outputStreamGlobal.write(editorContents).then(() => {
         // NB: Ici, on laisse le navigateur gérer l'encoding à sa guise...
-        outputStream.close().then(() => alert('Fichier enregistré !'), handleError);
+        outputStreamGlobal.close().then(() => alert('Fichier enregistré !'), handleError);
     }, handleError);
 }
 
@@ -66,7 +71,5 @@ function handleError(error) {
     console.error(error);
 }
 
-
-
-document.getElementById('btn-open').addEventListener('click', getTheFile);
+document.getElementById('btn-open').addEventListener('click', openFilePicker);
 document.getElementById('btn-save').addEventListener('click', saveFile);
