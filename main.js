@@ -34,7 +34,9 @@ function handleFileData(fileData) {
 }
 
 function displayFileContents(contents){
-    document.getElementById('editor').value = contents;
+    const editor = document.getElementById('editor');
+    editor.value = contents;
+    editor.disabled = false;
 }
 
 function requestWritableStream(fileHandle){

@@ -9,22 +9,37 @@
 </head>
 
 <body>
-    <h1>Démo : <em>File System Access API</em></h1>
-    <nav>
+    <h1>Démo - File System Access API</h1>
+    <h2>Un éditeur de fichier texte</h2>
+    <div>
         <p>
-            <button id="btn-open">Ouvrir</button>
-            <button id="btn-save" disabled>Enregistrer</button>
+            L’API d’accès au système de fichiers nous permet d’interagir avec des fichiers locaux.
+            Il est possible de demander l'accès à un (ou des) fichier(s), ou à un répertoire.
+            Si l'utilisateur l'a autorisé, cette API nous permet d'écrire dans le(s) fichier(s),
+            en Javascript, depuis notre application.
         </p>
         <p>
-            <input type="checkbox"  id="checkbox-save" checked />Demander l'accès en écriture
+            <strong>Voir aussi</strong> : <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API">File System Access
+                API - Web APIs | MDN</a>
+        </p>
+    </div>
+    <nav>
+        <p>
+            <button id="btn-open">Ouvrir un fichier</button>
+            <button id="btn-save" disabled>Enregistrer</button>
+        </p>
+        <p class="checkbox">
+            <input type="checkbox"  id="checkbox-save" checked />
+            <label for="checkbox-save">Demander l'accès en écriture</label>
         </p>
         
     </nav>
     <div id="metadata">-</div>
-    <div>
-        <textarea id="editor" rows="20"></textarea>
+    <div class="editor-wrap">
+        <textarea id="editor" rows="20" disabled></textarea>
     </div>
 
+    <footer><a href="https://www.jimetevenard.com">Jim Etevenard</a> - <a href="https://www.oxiane.com/">OXiane</a>
     <script src="main.js"></script>
 </body>
 
