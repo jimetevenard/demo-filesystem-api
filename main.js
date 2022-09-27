@@ -49,6 +49,16 @@ function requestWritableStream(fileHandle){
     });
 }
 
+function saveFile(){
+    if(!outputStream) throw new Error('pas d\'accès en écriture');
+
+    const editorContents = document.getElementById('editor').value;
+    outputStream.write(editorContents).then(() => {
+        // NB: Ici, on laisse le navigateur gérer l'encoding à sa guise...
+        outputStream.close().then(() => alert('Fichier enregistré !'), handleError);
+    }, handleError);
+}
+
 function handleError(error) {
     alert(`ERREUR : ${error}`);
     console.error(error);
@@ -57,3 +67,4 @@ function handleError(error) {
 
 
 document.getElementById('btn-open').addEventListener('click', getTheFile);
+document.getElementById('btn-save').addEventListener('click', saveFile);
